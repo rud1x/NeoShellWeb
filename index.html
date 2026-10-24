@@ -1,1 +1,1031 @@
-soon
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#08090b" />
+<meta name="color-scheme" content="dark" />
+<title>NeoShell — управление ПК с телефона по локальному Wi-Fi</title>
+<meta name="description" content="NeoShell превращает Android-телефон в пульт для Windows. Подключение по QR-коду, только локальный Wi-Fi: без облака, аккаунтов и телеметрии. Open source, GPL-3.0." />
+<meta property="og:title" content="NeoShell — управляй ПК. С дивана." />
+<meta property="og:description" content="Пульт для Windows в кармане. Только локальная сеть, без облака и аккаунтов. Open source." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="NeoShell" />
+<meta property="og:locale" content="ru_RU" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23e9a13b'/%3E%3Cpath d='M16 7 7 12l9 5 9-5-9-5Z' fill='%231a1206'/%3E%3Cpath d='M7 17l9 5 9-5' stroke='%231a1206' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/app/fonts.css" />
+<link rel="stylesheet" href="assets/app/phosphor/phosphor.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 3 7.5l9 4.5 9-4.5L12 3Z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/>
+  </symbol>
+  <symbol id="i-android" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="7" y="7" width="10" height="13" rx="3"/><path d="M9 7 7.5 4M15 7l1.5-3M4.5 11v5M19.5 11v5M10 20v2M14 20v2"/>
+    <circle cx="10" cy="12" r=".7" fill="currentColor" stroke="none"/><circle cx="14" cy="12" r=".7" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-windows" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3 4.5 10.5 3.5v7.6H3V4.5Zm9.5-1.3L21 2v9.1h-8.5V3.2ZM3 12.9h7.5v7.6L3 19.5v-6.6Zm9.5 0H21V22l-8.5-1.2v-7.9Z"/>
+  </symbol>
+  <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.67.8.56C20.71 21.39 24 17.08 24 12 24 5.73 18.27.5 12 .5Z"/>
+  </symbol>
+  <symbol id="i-telegram" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21.6 3.3 2.9 10.5c-1 .4-.95 1.5.07 1.8l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 1.95.35l2.5-3.1 4.6 3.4c.75.55 1.85.1 2.05-.8l3.2-14.3c.2-1.1-.8-1.9-2.05-1.45ZM9.6 14.3l8.2-5.6c.2-.15.4.1.25.25l-6.6 6.2-.25 3.1-1.8-3.95Z"/>
+  </symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 17 17 7M8 7h9v9"/>
+  </symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+    <path d="m12 2.6 2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.2-5.9 3.2 1.2-6.5L2.5 9.5l6.6-.9 2.9-6Z"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m4 12.5 5 5L20 6.5"/>
+  </symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5.5 15V6.5A2 2 0 0 1 7.5 4.5H16"/>
+  </symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 20 6v6c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3Z"/><path d="m8.5 12 2.4 2.4L16 9.5"/>
+  </symbol>
+  <symbol id="i-power" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v9"/><path d="M6.5 6.5a8 8 0 1 0 11 0"/>
+  </symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.5 8.5a15 15 0 0 1 19 0M5.8 12.2a10 10 0 0 1 12.4 0M9.2 15.8a5 5 0 0 1 5.6 0"/><circle cx="12" cy="19.2" r="1" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="12.5" rx="2.5"/><path d="M9 20.5h6M12 16.5v4"/>
+  </symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/>
+  </symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4Z"/><path d="M16.5 9.2a4 4 0 0 1 0 5.6M19 6.8a7.5 7.5 0 0 1 0 10.4"/>
+  </symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9.5a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4s2-1.5 2-6.5Z"/><path d="M10 19a2 2 0 0 0 4 0"/>
+  </symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="10" width="14" height="10.5" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+  </symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/>
+  </symbol>
+  <symbol id="i-restart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20.5 4v5h-5"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 4.5v15l12-7.5L8 4.5Z"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM19 5v14L9 12l10-7Z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM5 5v14l10-7L5 5Z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 2.5 4.5 13.5H11l-1 8 9-11.5H12.5l.5-7.5Z"/>
+  </symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M4 7.5h16M4 12h16M4 16.5h16"/>
+  </symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M6 6l12 12M18 6 6 18"/>
+  </symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m9 5 7 7-7 7"/>
+  </symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M12 5v14M5 12h14"/>
+  </symbol>
+</svg>
+
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<div class="scroll-progress" aria-hidden="true"><span id="progressBar"></span></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="NeoShell — в начало">
+      <span class="brand-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-layers"/></svg></span>
+      <span class="brand-name">NeoShell</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a class="nav-link" href="#features">Возможности</a>
+      <a class="nav-link" href="#how">Как работает</a>
+      <a class="nav-link" href="#showcase">Интерфейс</a>
+      <a class="nav-link" href="#download">Загрузка</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-gh" href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-github"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a class="btn btn-primary btn-sm" href="#download">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-download"/></svg>
+        <span>Скачать</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Открыть меню" aria-controls="mobileMenu" aria-expanded="false">
+        <svg class="ico ico-menu" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="ico ico-close" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <nav class="mobile-links" aria-label="Мобильная навигация">
+      <a href="#features">Возможности <span>01</span></a>
+      <a href="#how">Как работает <span>02</span></a>
+      <a href="#showcase">Интерфейс <span>03</span></a>
+      <a href="#download">Загрузка <span>04</span></a>
+    </nav>
+    <div class="mobile-foot">
+      <a class="btn btn-primary" href="#download">Скачать NeoShell</a>
+      <a class="mobile-gh" href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+      </a>
+      <a class="mobile-gh" href="https://t.me/therudix" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-telegram"/></svg> Telegram
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-grid">
+
+    <div class="hero-copy">
+      <div class="hero-badge" data-reveal>
+        <span class="badge-version">v2.4</span>
+        <span class="badge-sep"></span>
+        <span class="badge-text">Windows EXE + Android APK</span>
+        <span class="badge-live" aria-hidden="true"></span>
+      </div>
+
+      <h1 class="hero-title" data-reveal style="--d:.06s">
+        <span class="line">Управляй ПК.</span>
+        <span class="line line-serif">С дивана.</span>
+      </h1>
+
+      <p class="hero-lead" data-reveal style="--d:.12s">
+        NeoShell превращает Android-телефон в пульт для Windows.
+        Соединение — напрямую по локальному Wi-Fi: без облака,
+        аккаунтов и телеметрии.
+      </p>
+
+      <div class="hero-actions" data-reveal style="--d:.18s">
+        <a class="btn btn-primary" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener" data-magnetic>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-android"/></svg>
+          <span>Скачать APK</span>
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener" data-magnetic>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-windows"/></svg>
+          <span>Windows EXE</span>
+        </a>
+        <a class="btn btn-icon" href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener" aria-label="NeoShell на GitHub">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-github"/></svg>
+        </a>
+      </div>
+
+      <ul class="hero-meta" data-reveal style="--d:.24s">
+        <li><span class="meta-dot"></span>GPL-3.0</li>
+        <li>Python + Android</li>
+        <li>Ноль телеметрии</li>
+      </ul>
+    </div>
+
+    <div class="hero-stage" data-reveal style="--d:.1s">
+      <div class="stage-glow" aria-hidden="true"></div>
+
+      <div class="stage-inner" id="stageInner">
+
+        <div class="pc-window" aria-hidden="true">
+          <div class="exe-canvas" data-exe="360">
+            <header class="exe-head">
+              <span class="exe-back"><i class="ph-light ph-arrow-left"></i></span>
+              <span class="exe-title">ПОДКЛЮЧЕНИЕ</span>
+              <span class="exe-win"><i class="ph-light ph-minus"></i><i class="ph-light ph-x"></i></span>
+            </header>
+            <div class="exe-body">
+              <div class="exe-h">Сканируйте QR-код</div>
+              <p class="exe-sub">Откройте NeoShell на телефоне<br />и наведите камеру</p>
+              <div class="exe-qr"><img class="qr-code" src="assets/rickroll-qr.svg" alt="" /></div>
+              <div class="exe-card">
+                <div class="exe-row"><span>IP:</span><b>192.168.1.8</b></div>
+                <div class="exe-row"><span>Порт:</span><b>8008</b></div>
+                <div class="exe-row"><span>Ключ:</span><b class="is-green">884-120</b></div>
+                <div class="exe-row"><span>Ссылка:</span><b class="is-link">http://192.168.1.8:8008</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-phone" aria-hidden="true">
+          <div class="hp-frame">
+            <div class="hp-island"></div>
+            <div class="hp-screen">
+              <div class="au-canvas" data-au>
+                <div class="au-status">
+                  <span>21:34</span>
+                  <span class="au-status-ico"><i class="ph-light ph-cell-signal-high"></i><i class="ph-light ph-wifi-high"></i><i class="ph-light ph-battery-full"></i></span>
+                </div>
+                <header class="au-topbar">
+                  <span class="au-icon"><i class="ph-light ph-list"></i></span>
+                  <span class="au-brand">NeoShell</span>
+                  <span class="au-top-actions"><span class="au-icon"><i class="ph-light ph-arrows-clockwise"></i></span></span>
+                </header>
+                <div class="au-home">
+                  <section class="au-hero">
+                    <div class="au-hero-head"><span class="au-hero-label">В сети</span><span class="au-hero-ping">12 ms</span></div>
+                    <div class="au-hero-name">DESKTOP-7F2A</div>
+                    <div class="au-hero-sub">192.168.1.42:8000</div>
+                    <div class="au-hero-actions">
+                      <span class="au-hbtn"><i class="ph-light ph-lock-simple"></i><span>Блок</span></span>
+                      <span class="au-hbtn"><i class="ph-light ph-moon"></i><span>Сон</span></span>
+                      <span class="au-hbtn danger"><i class="ph-light ph-power"></i><span>Выключить</span></span>
+                    </div>
+                  </section>
+                  <div class="au-listhead"><span>Мои ПК</span><span class="au-count">2</span></div>
+                  <div class="au-list">
+                    <div class="au-dev">
+                      <span class="au-dev-ico"><i class="ph-light ph-desktop"></i></span>
+                      <span class="au-dev-info">
+                        <span class="au-dev-name">DESKTOP-7F2A</span>
+                        <span class="au-dev-meta"><span>192.168.1.42:8000</span><span class="on">12 ms</span></span>
+                      </span>
+                      <span class="au-dev-dot"></span>
+                    </div>
+                    <div class="au-dev">
+                      <span class="au-dev-ico"><i class="ph-light ph-laptop"></i></span>
+                      <span class="au-dev-info">
+                        <span class="au-dev-name">WORKSTATION</span>
+                        <span class="au-dev-meta"><span>192.168.1.9:8000</span><span class="off">недоступен</span></span>
+                      </span>
+                      <span class="au-dev-dot off"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="au-fab"><i class="ph-light ph-plus"></i>Добавить ПК</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Open source</span><i>◆</i>
+    <span>GPL-3.0</span><i>◆</i>
+    <span>Без облака</span><i>◆</i>
+    <span>Локальный Wi-Fi</span><i>◆</i>
+    <span>QR-подключение</span><i>◆</i>
+    <span>Python + Android</span><i>◆</i>
+    <span>0 телеметрии</span><i>◆</i>
+    <span>Windows + Android</span><i>◆</i>
+  </div>
+</div>
+
+<section class="section container" id="features">
+  <div class="section-head" data-reveal>
+    <div>
+      <span class="kicker"><i>01</i> Возможности</span>
+      <h2 class="h2">Всё, что нужно.<br /><span class="serif">Ничего лишнего.</span></h2>
+    </div>
+    <p class="section-lead">Шесть вещей, которые превращают телефон в пульт. И ни одной, которая тянет данные наружу.</p>
+  </div>
+
+  <div class="bento">
+    <article class="card c-7 card-split" data-reveal data-spotlight>
+      <div class="card-body">
+        <span class="card-kicker">Подключение</span>
+        <h3>Один скан — и ты в системе</h3>
+        <p>Запусти NeoShell на ПК и наведи камеру. Адрес, порт и ключ доступа подставятся сами — рукопожатие не выходит за пределы локальной сети.</p>
+        <ul class="card-list">
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Без ввода IP и паролей</li>
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Ключ доступа генерируешь ты</li>
+        </ul>
+      </div>
+      <div class="card-visual">
+        <div class="qr-frame">
+          <img class="qr-code" src="assets/rickroll-qr.svg" alt="" />
+        </div>
+        <span class="pill-success"><i class="dot-live"></i>Подключено</span>
+      </div>
+    </article>
+
+    <article class="card c-5" data-reveal data-spotlight style="--d:.06s">
+      <div class="card-body">
+        <span class="card-kicker">Питание</span>
+        <h3>Полный контроль питания</h3>
+        <p>Выключение, перезагрузка, сон и блокировка. Забег с дивана в два часа ночи отменяется.</p>
+      </div>
+      <div class="card-visual power-visual">
+        <div class="power-ring">
+          <span class="power-ring-inner"><svg class="ico" viewBox="0 0 24 24"><use href="#i-power"/></svg></span>
+        </div>
+        <div class="power-tags">
+          <span>Блок</span><span>Сон</span><span>Рестарт</span><span class="danger">Выкл</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card c-4" data-reveal data-spotlight style="--d:.1s">
+      <div class="card-body">
+        <span class="card-kicker">Приложения</span>
+        <h3>Запуск в одно касание</h3>
+        <p>Положи <span class="mono">.exe</span>, <span class="mono">.lnk</span> или <span class="mono">.url</span> в папку NeoShellApps — они появятся на телефоне.</p>
+      </div>
+      <div class="card-visual apps-visual">
+        <div class="app-row"><span class="app-ico">S</span><span>Steam</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev"/></svg></div>
+        <div class="app-row"><span class="app-ico">Sp</span><span>Spotify</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev"/></svg></div>
+        <div class="app-row"><span class="app-ico">O</span><span>OBS Studio</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev"/></svg></div>
+      </div>
+    </article>
+
+    <article class="card c-4" data-reveal data-spotlight style="--d:.14s">
+      <div class="card-body">
+        <span class="card-kicker">Медиа</span>
+        <h3>Звук под рукой</h3>
+        <p>Громкость и транспорт: play, pause, следующий, предыдущий. Не отрываясь от фильма.</p>
+      </div>
+      <div class="card-visual media-visual">
+        <div class="media-row">
+          <span class="media-art">♪</span>
+          <span class="media-info"><b>Midnight City</b><small>M83</small></span>
+          <span class="eq"><i></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="media-controls">
+          <span><svg class="ico" viewBox="0 0 24 24"><use href="#i-prev"/></svg></span>
+          <span class="is-play"><svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg></span>
+          <span><svg class="ico" viewBox="0 0 24 24"><use href="#i-next"/></svg></span>
+        </div>
+        <div class="media-vol"><svg class="ico" viewBox="0 0 24 24"><use href="#i-volume"/></svg><i><em style="width:62%"></em></i></div>
+      </div>
+    </article>
+
+    <article class="card c-4" data-reveal data-spotlight style="--d:.18s">
+      <div class="card-body">
+        <span class="card-kicker">События</span>
+        <h3>ПК на связи</h3>
+        <p>Узнавай, когда компьютер появился в сети, ушёл в сон или запустил приложение.</p>
+      </div>
+      <div class="card-visual push-visual">
+        <div class="toast toast-1"><i class="dot-live"></i><span><b>ПК в сети</b><small>DESKTOP-7F2A · сейчас</small></span></div>
+        <div class="toast toast-2"><i class="dot-live"></i><span><b>Steam запущен</b><small>Команда с телефона</small></span></div>
+        <div class="toast toast-3"><span><b>ПК ушёл в сон</b><small>12:04</small></span></div>
+      </div>
+    </article>
+
+    <article class="card c-12 privacy-card" data-reveal data-spotlight style="--d:.22s">
+      <div class="privacy-copy">
+        <span class="card-kicker">Приватность</span>
+        <h3>Данные не покидают твою сеть</h3>
+        <p>Ни телеметрии, ни аккаунтов, ни облачных посредников. Телефон общается с ПК напрямую по локальному Wi-Fi, а доступ защищён ключом, который задаёшь ты.</p>
+        <ul class="card-list">
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>0 внешних запросов</li>
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Ключ доступа — твой</li>
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Код открыт на GitHub</li>
+        </ul>
+      </div>
+      <div class="network" aria-hidden="true">
+        <svg viewBox="0 0 480 240" fill="none">
+          <defs>
+            <linearGradient id="netLine" x1="0" y1="0" x2="480" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#e9a13b" stop-opacity=".15"/><stop offset=".5" stop-color="#e9a13b" stop-opacity=".7"/><stop offset="1" stop-color="#e9a13b" stop-opacity=".15"/>
+            </linearGradient>
+          </defs>
+          <path d="M98 122h102M280 122h102" stroke="url(#netLine)" stroke-width="1.4" stroke-dasharray="4 7" class="net-flow"/>
+          <g class="net-node">
+            <rect x="24" y="96" width="72" height="52" rx="13" fill="#12141a" stroke="#2a2d35"/>
+            <rect x="46" y="109" width="28" height="18" rx="3" stroke="#8f939c" stroke-width="1.4"/>
+            <path d="M56 132h8" stroke="#8f939c" stroke-width="1.4" stroke-linecap="round"/>
+            <text x="60" y="170" text-anchor="middle" class="net-label">Телефон</text>
+          </g>
+          <g class="net-node">
+            <rect x="384" y="96" width="72" height="52" rx="13" fill="#12141a" stroke="#2a2d35"/>
+            <rect x="406" y="110" width="28" height="17" rx="2.5" stroke="#8f939c" stroke-width="1.4"/>
+            <path d="M415 133h10" stroke="#8f939c" stroke-width="1.4" stroke-linecap="round"/>
+            <text x="420" y="170" text-anchor="middle" class="net-label">ПК</text>
+          </g>
+          <g class="net-hub">
+            <circle cx="240" cy="122" r="54" stroke="#e9a13b" stroke-opacity=".12"/>
+            <circle cx="240" cy="122" r="40" fill="#12141a" stroke="#e9a13b" stroke-opacity=".45"/>
+            <path d="M240 105l13 4.9v7.6c0 6.5-4.6 10.6-13 13-8.4-2.4-13-6.5-13-13v-7.6l13-4.9Z" fill="#e9a13b" fill-opacity=".14" stroke="#e9a13b" stroke-width="1.5"/>
+            <path d="m234 120 4 4 8-9" stroke="#e9a13b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="240" y="56" text-anchor="middle" class="net-label">Только LAN</text>
+          </g>
+          <g opacity=".38" class="net-cloud">
+            <path d="M354 48c-6.2 0-11.2-4.6-11.2-10.4 0-5.6 4.4-10.2 10.4-10.6 1.8-5.6 6.6-9.4 12.6-9.4 7 0 12.4 5 12.8 11.4 5.8.6 9.8 4.4 9.8 9.6 0 5.4-4.4 9.4-10.6 9.4H354Z" stroke="#6f7480" stroke-dasharray="3 5"/>
+            <path d="m349 24 30 21" stroke="#6f7480" stroke-width="1.4" stroke-linecap="round"/>
+            <text x="378" y="68" text-anchor="middle" class="net-label">Облако не нужно</text>
+          </g>
+        </svg>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section container" id="how">
+  <div class="section-head" data-reveal>
+    <div>
+      <span class="kicker"><i>02</i> Как это работает</span>
+      <h2 class="h2">Три шага.<br /><span class="serif">Один скан.</span></h2>
+    </div>
+    <p class="section-lead">От установки до первого нажатия — меньше минуты. Всё, что нужно знать, умещается в QR-код.</p>
+  </div>
+
+  <div class="steps">
+    <article class="step" data-reveal>
+      <div class="step-head"><span class="step-n">01</span><span class="step-rule"></span><span class="step-tag">ПК</span></div>
+      <h3>Запусти NeoShell на ПК</h3>
+      <p>Открой EXE и разреши доступ в локальной сети. Приложение свернётся в трей и покажет окно подключения.</p>
+    </article>
+
+    <article class="step" data-reveal style="--d:.08s">
+      <div class="step-head"><span class="step-n">02</span><span class="step-rule"></span><span class="step-tag">Телефон</span></div>
+      <h3>Отсканируй QR-код</h3>
+      <p>Открой NeoShell на телефоне, нажми «Добавить ПК» и наведи камеру. Адрес, порт и ключ подставятся сами.</p>
+    </article>
+
+    <article class="step" data-reveal style="--d:.16s">
+      <div class="step-head"><span class="step-n">03</span><span class="step-rule"></span><span class="step-tag">Готово</span></div>
+      <h3>Управляй</h3>
+      <p>ПК появится в списке с пингом и статусом. Блокировка, звук и приложения — в одно касание.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section showcase" id="showcase">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div>
+        <span class="kicker"><i>03</i> Интерфейс</span>
+        <h2 class="h2">Один пульт.<br /><span class="serif">Собери сам.</span></h2>
+      </div>
+      <p class="section-lead">Медиа, ярлыки, команды и питание — это модули. Порядок на главном экране задаёшь ты, а не приложение.</p>
+    </div>
+
+    <div class="layout-bar" data-reveal>
+      <p><b>Своя раскладка.</b> Включи режим и перетащи карточки на экране «Управление» — как в приложении.</p>
+      <button class="btn btn-secondary layout-btn" type="button" id="layoutToggle" aria-pressed="false">
+        <i class="ph-light ph-arrows-out-cardinal"></i>
+        <span id="layoutToggleText">Режим раскладки</span>
+      </button>
+    </div>
+
+    <div class="showcase-grid">
+        <div class="showcase-tabs" id="screenTabs" role="tablist" aria-label="Экраны приложения" aria-orientation="vertical" data-reveal>
+        <button class="tab is-active" type="button" role="tab" aria-selected="true" data-screen="power" id="tab-power" aria-controls="screen-power">
+          <span class="tab-n">01</span>
+          <span class="tab-main">
+            <span class="tab-title">Управление</span>
+            <span class="tab-desc">Медиа, закреплённые ярлыки, команды и питание — вся панель ПК на одном экране.</span>
+          </span>
+          <span class="tab-bar"><i></i></span>
+        </button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="apps" id="tab-apps" aria-controls="screen-apps" tabindex="-1">
+          <span class="tab-n">02</span>
+          <span class="tab-main">
+            <span class="tab-title">Приложения</span>
+            <span class="tab-desc">Всё из папки NeoShellApps — отдельными плитками. Запуск в одно касание.</span>
+          </span>
+          <span class="tab-bar"><i></i></span>
+        </button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="media" id="tab-media" aria-controls="screen-media" tabindex="-1">
+          <span class="tab-n">03</span>
+          <span class="tab-main">
+            <span class="tab-title">Медиа</span>
+            <span class="tab-desc">Обложка, трек и транспорт. Плюс громкость — не отрываясь от фильма.</span>
+          </span>
+          <span class="tab-bar"><i></i></span>
+        </button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="status" id="tab-status" aria-controls="screen-status" tabindex="-1">
+          <span class="tab-n">04</span>
+          <span class="tab-main">
+            <span class="tab-title">Статус</span>
+            <span class="tab-desc">CPU, RAM, диск и температура. Живые показатели без задержек и фоновой нагрузки.</span>
+          </span>
+          <span class="tab-bar"><i></i></span>
+        </button>
+        <p class="tabs-hint"><span class="mono">↑↓</span> Выбери экран или дождись смены</p>
+      </div>
+
+      <div class="showcase-stage" data-reveal style="--d:.08s">
+        <div class="stage-halo" aria-hidden="true"></div>
+        <div class="phone-lg" id="showcasePhone">
+          <div class="phone-frame">
+            <div class="phone-island"></div>
+            <div class="phone-screen">
+              <section class="pscreen is-active" data-screen="power" id="screen-power" role="tabpanel" aria-labelledby="tab-power">
+                <div class="au-canvas" data-au>
+                  <div class="au-status"><span>21:34</span><span class="au-status-ico"><i class="ph-light ph-cell-signal-high"></i><i class="ph-light ph-wifi-high"></i><i class="ph-light ph-battery-full"></i></span></div>
+                  <div class="au-page au-reorder">
+                    <div class="au-dp-head">
+                      <div class="au-dp-top">
+                        <span class="au-icon"><i class="ph-light ph-arrow-left"></i></span>
+                        <span class="au-dp-tools"><span class="au-icon"><i class="ph-light ph-arrows-clockwise"></i></span><span class="au-icon"><i class="ph-light ph-dots-three-vertical"></i></span></span>
+                      </div>
+                      <div class="au-dp-name">DESKTOP-7F2A</div>
+                      <div class="au-pill"><i class="au-pill-dot"></i>ПК доступен</div>
+                      <div class="au-dp-sub">192.168.1.42:8000 · 12 ms</div>
+                    </div>
+
+                    <section class="au-panel au-panel-media" data-panel="media">
+                      <span class="au-grip" role="button" tabindex="-1" aria-label="Переместить модуль"><i class="ph-light ph-dots-six-vertical"></i></span>
+                      <div class="au-media">
+                        <div class="au-art"></div>
+                        <div class="au-meta">
+                          <div class="au-mtitle">Midnight City</div>
+                          <div class="au-martist">M83</div>
+                          <div class="au-malbum">Hurry Up, We're Dreaming</div>
+                        </div>
+                        <div class="au-mcontrols">
+                          <span class="au-mbtn"><i class="ph-light ph-skip-back"></i></span>
+                          <span class="au-mbtn play"><i class="ph-light ph-pause"></i></span>
+                          <span class="au-mbtn"><i class="ph-light ph-skip-forward"></i></span>
+                          <span class="au-mbtn"><i class="ph-light ph-stop"></i></span>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="au-panel" data-panel="actions">
+                      <span class="au-grip" role="button" tabindex="-1" aria-label="Переместить модуль"><i class="ph-light ph-dots-six-vertical"></i></span>
+                      <div class="au-phead"><i class="ph-light ph-sliders-horizontal"></i><span>Управление</span><span class="au-link">Настроить</span></div>
+                      <div class="au-actions">
+                        <div class="au-action"><i class="ph-light ph-steam-logo"></i><span>Steam</span></div>
+                        <div class="au-action"><i class="ph-light ph-discord-logo"></i><span>Discord</span></div>
+                        <div class="au-action"><i class="ph-light ph-spotify-logo"></i><span>Spotify</span></div>
+                        <div class="au-action"><i class="ph-light ph-terminal-window"></i><span>Терминал</span></div>
+                        <div class="au-action"><i class="ph-light ph-globe"></i><span>Браузер</span></div>
+                        <div class="au-action"><i class="ph-light ph-folder-open"></i><span>Проводник</span></div>
+                        <div class="au-action"><i class="ph-light ph-youtube-logo"></i><span>YouTube</span></div>
+                        <div class="au-action"><i class="ph-light ph-clock-counter-clockwise"></i><span>Таймер</span></div>
+                      </div>
+                    </section>
+
+                    <section class="au-panel au-panel-power" data-panel="power">
+                      <span class="au-grip" role="button" tabindex="-1" aria-label="Переместить модуль"><i class="ph-light ph-dots-six-vertical"></i></span>
+                      <div class="au-powers">
+                        <span class="au-pw"><i class="ph-light ph-lock-simple"></i><span>Блок</span></span>
+                        <span class="au-pw"><i class="ph-light ph-moon"></i><span>Сон</span></span>
+                        <span class="au-pw warn"><i class="ph-light ph-arrows-clockwise"></i><span>Перезагрузка</span></span>
+                        <span class="au-pw danger"><i class="ph-light ph-power"></i><span>Выключить</span></span>
+                      </div>
+                    </section>
+
+                    <section class="au-panel" data-panel="commands">
+                      <span class="au-grip" role="button" tabindex="-1" aria-label="Переместить модуль"><i class="ph-light ph-dots-six-vertical"></i></span>
+                      <div class="au-phead"><i class="ph-light ph-lightning"></i><span>Команды</span><span class="au-link">Все</span></div>
+                      <div class="au-cmds">
+                        <div class="au-cmd"><i class="ph-light ph-youtube-logo"></i><span class="au-cmd-txt"><b>Вечер кино</b><small>start chrome youtube.com</small></span><i class="ph-light ph-caret-right"></i></div>
+                        <div class="au-cmd"><i class="ph-light ph-code"></i><span class="au-cmd-txt"><b>Рабочий стол</b><small>start code D:\Work</small></span><i class="ph-light ph-caret-right"></i></div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </section>
+
+              <section class="pscreen" data-screen="apps" id="screen-apps" role="tabpanel" aria-labelledby="tab-apps" hidden>
+                <div class="au-canvas" data-au>
+                  <div class="au-status"><span>21:34</span><span class="au-status-ico"><i class="ph-light ph-cell-signal-high"></i><i class="ph-light ph-wifi-high"></i><i class="ph-light ph-battery-full"></i></span></div>
+                  <header class="au-pagebar">
+                    <span class="au-icon"><i class="ph-light ph-arrow-left"></i></span>
+                    <div class="au-pagebar-title">Приложения</div>
+                    <span class="au-icon"><i class="ph-light ph-arrows-clockwise"></i></span>
+                  </header>
+                  <div class="au-apps-body">
+                    <div class="au-search"><i class="ph-light ph-magnifying-glass"></i><span>Поиск приложения</span></div>
+                    <div class="au-folder">
+                      <span class="au-folder-ico"><i class="ph-light ph-folder-open"></i></span>
+                      <span class="au-folder-copy"><strong>Папка ярлыков</strong><small>Открыть NeoShellApps на ПК</small></span>
+                      <i class="ph-light ph-arrow-up-right"></i>
+                    </div>
+                    <div class="au-appgrid">
+                      <div class="au-tile exe"><span class="au-tile-ico"><i class="ph-light ph-steam-logo"></i></span><span class="au-tile-name">Steam</span><span class="au-kind">EXE</span></div>
+                      <div class="au-tile exe"><span class="au-tile-ico"><i class="ph-light ph-spotify-logo"></i></span><span class="au-tile-name">Spotify</span><span class="au-kind">EXE</span></div>
+                      <div class="au-tile exe"><span class="au-tile-ico"><i class="ph-light ph-discord-logo"></i></span><span class="au-tile-name">Discord</span><span class="au-kind">EXE</span></div>
+                      <div class="au-tile exe"><span class="au-tile-ico"><i class="ph-light ph-screencast"></i></span><span class="au-tile-name">OBS Studio</span><span class="au-kind">EXE</span></div>
+                      <div class="au-tile url"><span class="au-tile-ico"><i class="ph-light ph-youtube-logo"></i></span><span class="au-tile-name">YouTube</span><span class="au-kind">URL</span></div>
+                      <div class="au-tile url"><span class="au-tile-ico"><i class="ph-light ph-notebook"></i></span><span class="au-tile-name">Notion</span><span class="au-kind">URL</span></div>
+                      <div class="au-tile lnk"><span class="au-tile-ico"><i class="ph-light ph-terminal-window"></i></span><span class="au-tile-name">Terminal</span><span class="au-kind">LNK</span></div>
+                      <div class="au-tile lnk"><span class="au-tile-ico"><i class="ph-light ph-globe"></i></span><span class="au-tile-name">Chrome</span><span class="au-kind">LNK</span></div>
+                      <div class="au-tile lnk"><span class="au-tile-ico"><i class="ph-light ph-pen-nib"></i></span><span class="au-tile-name">Figma</span><span class="au-kind">LNK</span></div>
+                      <div class="au-tile exe"><span class="au-tile-ico"><i class="ph-light ph-code"></i></span><span class="au-tile-name">Visual Studio Code</span><span class="au-kind">EXE</span></div>
+                      <div class="au-tile exe"><span class="au-tile-ico"><i class="ph-light ph-paint-brush"></i></span><span class="au-tile-name">Photoshop</span><span class="au-kind">EXE</span></div>
+                      <div class="au-tile url"><span class="au-tile-ico"><i class="ph-light ph-telegram-logo"></i></span><span class="au-tile-name">Telegram Web</span><span class="au-kind">URL</span></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="pscreen" data-screen="media" id="screen-media" role="tabpanel" aria-labelledby="tab-media" hidden>
+                <div class="au-canvas" data-au>
+                  <div class="au-status"><span>21:34</span><span class="au-status-ico"><i class="ph-light ph-cell-signal-high"></i><i class="ph-light ph-wifi-high"></i><i class="ph-light ph-battery-full"></i></span></div>
+                  <div class="au-page">
+                    <div class="au-dp-head">
+                      <div class="au-dp-top">
+                        <span class="au-icon"><i class="ph-light ph-arrow-left"></i></span>
+                        <span class="au-dp-tools"><span class="au-icon"><i class="ph-light ph-arrows-clockwise"></i></span><span class="au-icon"><i class="ph-light ph-dots-three-vertical"></i></span></span>
+                      </div>
+                      <div class="au-dp-name">DESKTOP-7F2A</div>
+                      <div class="au-pill"><i class="au-pill-dot"></i>ПК доступен</div>
+                      <div class="au-dp-sub">192.168.1.42:8000 · 12 ms</div>
+                    </div>
+
+                    <section class="au-panel au-panel-media">
+                      <div class="au-media">
+                        <div class="au-art"></div>
+                        <div class="au-meta">
+                          <div class="au-mtitle">Midnight City</div>
+                          <div class="au-martist">M83</div>
+                          <div class="au-malbum">Hurry Up, We're Dreaming</div>
+                        </div>
+                        <div class="au-mcontrols">
+                          <span class="au-mbtn"><i class="ph-light ph-skip-back"></i></span>
+                          <span class="au-mbtn play"><i class="ph-light ph-pause"></i></span>
+                          <span class="au-mbtn"><i class="ph-light ph-skip-forward"></i></span>
+                          <span class="au-mbtn"><i class="ph-light ph-stop"></i></span>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="au-panel au-panel-vol">
+                      <div class="au-phead"><i class="ph-light ph-speaker-high"></i><span>Громкость</span></div>
+                      <div class="au-vol">
+                        <i class="ph-light ph-speaker-high"></i>
+                        <div class="au-slider"><i style="width:62%"></i><b style="left:62%"></b></div>
+                        <span>62%</span>
+                      </div>
+                    </section>
+
+                    <section class="au-panel au-panel-power">
+                      <div class="au-powers">
+                        <span class="au-pw"><i class="ph-light ph-lock-simple"></i><span>Блок</span></span>
+                        <span class="au-pw"><i class="ph-light ph-moon"></i><span>Сон</span></span>
+                        <span class="au-pw warn"><i class="ph-light ph-arrows-clockwise"></i><span>Перезагрузка</span></span>
+                        <span class="au-pw danger"><i class="ph-light ph-power"></i><span>Выключить</span></span>
+                      </div>
+                    </section>
+
+                    <section class="au-panel">
+                      <div class="au-phead"><i class="ph-light ph-lightning"></i><span>Команды</span><span class="au-link">Все</span></div>
+                      <div class="au-cmds">
+                        <div class="au-cmd"><i class="ph-light ph-youtube-logo"></i><span class="au-cmd-txt"><b>Вечер кино</b><small>start chrome youtube.com</small></span><i class="ph-light ph-caret-right"></i></div>
+                        <div class="au-cmd"><i class="ph-light ph-code"></i><span class="au-cmd-txt"><b>Рабочий стол</b><small>start code D:\Work</small></span><i class="ph-light ph-caret-right"></i></div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </section>
+
+              <section class="pscreen" data-screen="status" id="screen-status" role="tabpanel" aria-labelledby="tab-status" hidden>
+                <div class="au-canvas" data-au>
+                  <div class="au-status"><span>21:34</span><span class="au-status-ico"><i class="ph-light ph-cell-signal-high"></i><i class="ph-light ph-wifi-high"></i><i class="ph-light ph-battery-full"></i></span></div>
+                  <div class="au-page">
+                    <div class="au-dp-head">
+                      <div class="au-dp-top">
+                        <span class="au-icon"><i class="ph-light ph-arrow-left"></i></span>
+                        <span class="au-dp-tools"><span class="au-icon"><i class="ph-light ph-arrows-clockwise"></i></span><span class="au-icon"><i class="ph-light ph-dots-three-vertical"></i></span></span>
+                      </div>
+                      <div class="au-dp-name">DESKTOP-7F2A</div>
+                      <div class="au-pill"><i class="au-pill-dot"></i>ПК доступен</div>
+                      <div class="au-dp-sub">192.168.1.42:8000 · 12 ms</div>
+                    </div>
+
+                    <section class="au-panel">
+                      <div class="au-phead"><i class="ph-light ph-chart-line"></i><span>Состояние</span></div>
+                      <div class="au-stats">
+                        <div class="au-stat"><span>CPU</span><b>34%</b><i><em style="width:34%"></em></i></div>
+                        <div class="au-stat"><span>RAM</span><b>61%</b><i><em style="width:61%"></em></i></div>
+                        <div class="au-stat"><span>DISK</span><b>48%</b><i><em style="width:48%"></em></i></div>
+                        <div class="au-temp"><span>TEMP</span><b>52°C</b><i><em style="width:52%"></em></i></div>
+                      </div>
+                    </section>
+
+                    <section class="au-panel au-panel-vol">
+                      <div class="au-phead"><i class="ph-light ph-speaker-high"></i><span>Громкость</span></div>
+                      <div class="au-vol">
+                        <i class="ph-light ph-speaker-high"></i>
+                        <div class="au-slider"><i style="width:62%"></i><b style="left:62%"></b></div>
+                        <span>62%</span>
+                      </div>
+                    </section>
+
+                    <section class="au-panel">
+                      <div class="au-phead"><i class="ph-light ph-grid-four"></i><span>Приложения</span><span class="au-link">Все</span></div>
+                      <div class="au-mini">
+                        <div class="au-mini-tile"><i class="ph-light ph-steam-logo"></i><span>Steam</span></div>
+                        <div class="au-mini-tile"><i class="ph-light ph-spotify-logo"></i><span>Spotify</span></div>
+                        <div class="au-mini-tile"><i class="ph-light ph-discord-logo"></i><span>Discord</span></div>
+                        <div class="au-mini-tile"><i class="ph-light ph-terminal-window"></i><span>Terminal</span></div>
+                      </div>
+                    </section>
+
+                    <section class="au-panel au-panel-power">
+                      <div class="au-powers">
+                        <span class="au-pw"><i class="ph-light ph-lock-simple"></i><span>Блок</span></span>
+                        <span class="au-pw"><i class="ph-light ph-moon"></i><span>Сон</span></span>
+                        <span class="au-pw warn"><i class="ph-light ph-arrows-clockwise"></i><span>Перезагрузка</span></span>
+                        <span class="au-pw danger"><i class="ph-light ph-power"></i><span>Выключить</span></span>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+          <span class="stage-tag"><i class="dot-live"></i>Живой интерфейс</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="download">
+  <div class="section-head" data-reveal>
+    <div>
+      <span class="kicker"><i>04</i> Загрузка</span>
+      <h2 class="h2">Скачай.<br /><span class="serif">Подключись.</span></h2>
+    </div>
+    <p class="section-lead">Оба клиента бесплатны, без регистрации и подписок. Исходники открыты — можно проверить каждую строку.</p>
+  </div>
+
+  <div class="download-grid">
+    <article class="dl-card" data-reveal>
+      <div class="dl-top">
+        <span class="dl-icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-windows"/></svg></span>
+        <span class="dl-badge">Latest · v2.4</span>
+      </div>
+      <div class="dl-copy">
+        <h3>NeoShell для Windows</h3>
+        <p>Сервер-пульт для ПК. Сворачивается в трей, работает в фоне и ждёт подключения из локальной сети.</p>
+      </div>
+      <dl class="dl-specs">
+        <div><dt>Версия</dt><dd>2.4</dd></div>
+        <div><dt>Размер</dt><dd>74,6 МБ</dd></div>
+        <div><dt>Система</dt><dd>Windows 10/11</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-download"/></svg>
+        <span>Скачать для Windows</span>
+      </a>
+      <span class="dl-note">ZIP-архив · портативный EXE · без установки</span>
+    </article>
+
+    <article class="dl-card" data-reveal style="--d:.08s">
+      <div class="dl-top">
+        <span class="dl-icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-android"/></svg></span>
+        <span class="dl-badge">Latest · v2.4</span>
+      </div>
+      <div class="dl-copy">
+        <h3>NeoShell для Android</h3>
+        <p>Клиент-пульт. Сканирует QR-код один раз и остаётся на связи, пока телефон и ПК в одной сети.</p>
+      </div>
+      <dl class="dl-specs">
+        <div><dt>Версия</dt><dd>2.4</dd></div>
+        <div><dt>Размер</dt><dd>33,6 МБ</dd></div>
+        <div><dt>Система</dt><dd>Android 8.0+</dd></div>
+      </dl>
+      <a class="btn btn-secondary btn-block" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-download"/></svg>
+        <span>Скачать APK</span>
+      </a>
+      <span class="dl-note">APK · установка из неизвестных источников</span>
+    </article>
+  </div>
+
+  <div class="src-card" data-reveal>
+    <div class="src-copy">
+      <span class="card-kicker">Для разработчиков</span>
+      <h3>Или собери из исходников</h3>
+    </div>
+    <div class="code">
+      <code id="cloneCmd">git clone https://github.com/rud1x/NeoShell.git</code>
+      <button class="copy-btn" id="copyClone" type="button" aria-label="Скопировать команду">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>
+      </button>
+    </div>
+    <a class="link-arrow" href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener">Открыть репозиторий <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+  </div>
+
+  <p class="download-fine" data-reveal>Лицензия GPL-3.0 · Без аккаунтов · Ноль телеметрии · Работает офлайн</p>
+</section>
+
+<section class="metrics-wrap container" aria-label="NeoShell в цифрах">
+  <div class="metrics" data-stagger>
+    <div class="metric">
+      <span class="metric-value">GPL-3.0</span>
+      <span class="metric-label">лицензия</span>
+      <span class="metric-note">Форкай, проверяй, используй.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" data-count="0">0</span>
+      <span class="metric-label">байт в облако</span>
+      <span class="metric-note">Эндпоинта телеметрии не существует.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" data-count="2">0</span>
+      <span class="metric-label">платформы</span>
+      <span class="metric-note">Android APK + Windows EXE.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" data-count="100" data-suffix="%">0</span>
+      <span class="metric-label">open source</span>
+      <span class="metric-note">Каждая строка — на GitHub.</span>
+    </div>
+  </div>
+</section>
+
+<section class="principles" id="principles">
+  <div class="principles-sticky">
+    <div class="pr-bg" aria-hidden="true"><span class="pr-mesh"></span><span class="pr-grid"></span></div>
+    <div class="pr-label"><span class="mono">Манифест</span><span class="pr-line"></span><span class="mono">Принципы проекта</span></div>
+    <div class="principles-track" id="principlesTrack">
+      <article class="principle">
+        <span class="pr-index mono">01 / 04</span>
+        <span class="pr-stat">0</span>
+        <h3>облачных серверов</h3>
+        <p>Нет бэкенда, которому нужно доверять. ПК и телефон говорят напрямую.</p>
+      </article>
+      <article class="principle">
+        <span class="pr-index mono">02 / 04</span>
+        <span class="pr-stat">1</span>
+        <h3>скан QR-кода</h3>
+        <p>Подключение — один жест. Без ввода IP, портов и паролей вручную.</p>
+      </article>
+      <article class="principle">
+        <span class="pr-index mono">03 / 04</span>
+        <span class="pr-stat">&lt;1с</span>
+        <h3>на соединение</h3>
+        <p>Прямой сокет в локальной сети. Без посредников и лишних хопов.</p>
+      </article>
+      <article class="principle">
+        <span class="pr-index mono">04 / 04</span>
+        <span class="pr-stat">100%</span>
+        <h3>локально</h3>
+        <p>Трафик не выходит за пределы твоей подсети. Совсем.</p>
+      </article>
+      <article class="principle principle-end">
+        <span class="pr-index mono">Финал</span>
+        <h3 class="serif">Вот и весь<br />продукт.</h3>
+        <p>Твой ПК, твоя сеть, твои правила.</p>
+        <a class="link-arrow" href="#download">Скачать NeoShell <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+      </article>
+    </div>
+    <div class="pr-progress" aria-hidden="true"><span id="prProgress"></span></div>
+  </div>
+</section>
+
+<section class="section container" id="community">
+  <div class="section-head" data-reveal>
+    <div>
+      <span class="kicker"><i>05</i> Сообщество</span>
+      <h2 class="h2">Никакого маркетинга.<br /><span class="serif">Только код и цифры.</span></h2>
+    </div>
+    <p class="section-lead">Публичных отзывов пока нет — проект молодой и растёт без рекламы. Все цифры можно проверить в репозитории.</p>
+  </div>
+
+  <div class="quotes" data-stagger>
+    <figure class="quote proof">
+      <span class="proof-n" data-count="56">56</span>
+      <div class="proof-t">звёзд на GitHub</div>
+      <p class="proof-p">Проект живёт без рекламы и подписок: репозиторий, релизы и Telegram автора.</p>
+      <figcaption>
+        <span class="q-meta"><strong>rud1x/NeoShell</strong><small>обновлён 24.10.2026</small></span>
+      </figcaption>
+    </figure>
+    <figure class="quote proof">
+      <span class="proof-n" data-count="405">405</span>
+      <div class="proof-t">скачиваний релизов</div>
+      <p class="proof-p">Пять релизов от v2.0 до v2.4 — EXE и APK качают напрямую с GitHub.</p>
+      <figcaption>
+        <span class="q-meta"><strong>5 форков · 4 watchers</strong><small>0 открытых issues</small></span>
+      </figcaption>
+    </figure>
+    <figure class="quote proof">
+      <span class="proof-n">GPL-3.0</span>
+      <div class="proof-t">открытый код</div>
+      <p class="proof-p">Python-сервер, Android-клиент и этот сайт — всё в одном репозитории.</p>
+      <figcaption>
+        <span class="q-meta"><strong>Без телеметрии</strong><small>Публичных отзывов пока нет</small></span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="gh-band" data-reveal>
+    <div class="gh-left">
+      <span class="gh-icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-github"/></svg></span>
+      <div>
+        <h3>NeoShell — открытый код</h3>
+        <p>Python-сервер, Android-клиент и этот сайт. Всё в одном репозитории.</p>
+      </div>
+    </div>
+    <div class="gh-actions">
+      <a class="btn btn-secondary" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener">Релизы</a>
+      <a class="btn btn-primary" href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg>
+        <span>Поставить звезду</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="download-cta">
+  <div class="container">
+    <div class="cta-panel" data-reveal>
+      <div class="cta-grid" aria-hidden="true"></div>
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="cta-inner">
+        <span class="kicker kicker-center"><i>NeoShell 2.4</i></span>
+        <h2 class="cta-title">Скачай.<br /><span class="serif">Управляй.</span></h2>
+        <p class="cta-lead">Пульт для Windows уже в кармане. APK и EXE — в одном релизе.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener" data-magnetic>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-android"/></svg>
+            <span>Скачать APK</span>
+          </a>
+          <a class="btn btn-secondary btn-lg" href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener" data-magnetic>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-windows"/></svg>
+            <span>Windows EXE</span>
+          </a>
+        </div>
+        <div class="cta-trust">
+          <span><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Без аккаунта</span>
+          <span><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>GPL-3.0</span>
+          <span><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Работает офлайн</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-word" aria-hidden="true">NEOSHELL</div>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="#top" aria-label="NeoShell — в начало">
+          <span class="brand-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-layers"/></svg></span>
+          <span class="brand-name">NeoShell</span>
+        </a>
+        <p>Пульт для Windows в кармане. Только локальная сеть, только твои правила.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ico" viewBox="0 0 24 24"><use href="#i-github"/></svg></a>
+          <a href="https://t.me/therudix" target="_blank" rel="noopener" aria-label="Telegram"><svg class="ico" viewBox="0 0 24 24"><use href="#i-telegram"/></svg></a>
+        </div>
+      </div>
+
+      <nav class="footer-cols" aria-label="Подвал">
+        <div class="footer-col">
+          <h4>Продукт</h4>
+          <a href="#features">Возможности</a>
+          <a href="#how">Как работает</a>
+          <a href="#showcase">Интерфейс</a>
+          <a href="#download">Загрузка</a>
+        </div>
+        <div class="footer-col">
+          <h4>Ресурсы</h4>
+          <a href="https://github.com/rud1x/NeoShell" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/rud1x/NeoShell/releases/latest" target="_blank" rel="noopener">Релизы</a>
+          <a href="https://github.com/rud1x/NeoShell#readme" target="_blank" rel="noopener">Документация</a>
+          <a href="https://github.com/rud1x/NeoShell/blob/main/LICENSE" target="_blank" rel="noopener">Лицензия</a>
+        </div>
+        <div class="footer-col">
+          <h4>Связь</h4>
+          <a href="https://t.me/therudix" target="_blank" rel="noopener">Telegram</a>
+          <a href="https://github.com/rud1x" target="_blank" rel="noopener">Автор</a>
+          <a href="https://github.com/rud1x/NeoShell/issues" target="_blank" rel="noopener">Issues</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 NeoShell · GPL-3.0</span>
+      <span class="footer-made">Сделано <a href="https://github.com/rud1x" target="_blank" rel="noopener">rud1x</a></span>
+      <span class="footer-status"><i class="dot-live"></i>Локально. Приватно. Открыто.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
